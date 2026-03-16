@@ -1,85 +1,37 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-
-<meta charset="UTF-8">
-<title>Promoções</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
 <style>
-
-.card img{
-height:180px;
-object-fit:contain;
+.card img {
+  width: 100%;
+  height: auto; /* altura automática */
+  max-height: 250px; /* limita a altura sem cortar a imagem */
+  object-fit: contain;
 }
 
-.old{
-text-decoration:line-through;
-color:gray;
+.old {
+  text-decoration: line-through;
+  color: gray;
+  font-size: 14px;
 }
 
-.new{
-font-size:24px;
-color:red;
-font-weight:bold;
+.new {
+  font-size: 22px;
+  color: red;
+  font-weight: bold;
 }
 
+/* Ajustes responsivos para celular */
+@media (max-width: 576px) {
+  .card-body h6 {
+    font-size: 16px;
+  }
+  .old {
+    font-size: 12px;
+  }
+  .new {
+    font-size: 20px;
+  }
+  .btn {
+    font-size: 16px;
+    padding: 10px 15px;
+  }
+}
 </style>
-
-</head>
-
-<body class="container py-4">
-
-<h1 class="text-center mb-4">🔥 Promoções do Dia</h1>
-
-<div class="row g-3" id="produtos"></div>
-
-<script>
-
-fetch("promos.json")
-
-.then(r=>r.json())
-
-.then(lista=>{
-
-let div=document.getElementById("produtos")
-
-lista.forEach(p=>{
-
-div.innerHTML+=`
-
-<div class="col-12 col-sm-6 col-md-4 col-lg-3">
-
-<div class="card h-100 shadow-sm">
-
-<img src="${p.img}" class="card-img-top">
-
-<div class="card-body text-center">
-
-<h6>${p.nome}</h6>
-
-<div class="old">R$ ${p.old}</div>
-
-<div class="new">R$ ${p.new}</div>
-
-<a href="${p.link}" target="_blank" class="btn btn-success mt-2">
-Ver Oferta
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-`
-
-})
-
-})
-
-</script>
-
-</body>
-</html>
