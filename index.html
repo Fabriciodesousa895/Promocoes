@@ -9,8 +9,8 @@
 /* Estilo das imagens dos cards */
 .card img {
   width: 100%;
-  height: auto;      /* altura automática para manter proporção */
-  max-height: 250px; /* limita altura sem cortar imagem */
+  height: auto;
+  max-height: 300px; /* maior altura para celular */
   object-fit: contain;
 }
 
@@ -18,30 +18,38 @@
 .old {
   text-decoration: line-through;
   color: gray;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 /* Preço novo */
 .new {
-  font-size: 22px;
+  font-size: 28px;
   color: red;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
-/* Ajustes responsivos para celular */
+/* Ajustes para celular */
 @media (max-width: 576px) {
+  .row#g-produtos {
+    gap: 1.5rem; /* mais espaço entre cards */
+  }
+  .col-12 {
+    margin-bottom: 1rem;
+  }
   .card-body h6 {
-    font-size: 16px;
+    font-size: 20px;
+    font-weight: bold;
   }
   .old {
-    font-size: 12px;
+    font-size: 16px;
   }
   .new {
-    font-size: 20px;
+    font-size: 26px;
   }
   .btn {
-    font-size: 16px;
-    padding: 10px 15px;
+    font-size: 18px;
+    padding: 12px 20px;
   }
 }
 </style>
@@ -68,9 +76,7 @@ fetch("promos.json")
             <h6>${p.nome}</h6>
             <div class="old">R$ ${p.old}</div>
             <div class="new">R$ ${p.new}</div>
-            <a href="${p.link}" target="_blank" class="btn btn-success mt-2">
-              Ver Oferta
-            </a>
+            <a href="${p.link}" target="_blank" class="btn btn-success mt-2">Ver Oferta</a>
           </div>
         </div>
       </div>
