@@ -33,7 +33,7 @@ font-weight:bold;
 
 <h1 class="text-center mb-4">🔥 Promoções do Dia</h1>
 
-<div class="row" id="produtos"></div>
+<div class="row g-3" id="produtos"></div>
 
 <script>
 
@@ -49,9 +49,9 @@ lista.forEach(p=>{
 
 div.innerHTML+=`
 
-<div class="col-md-3 mb-4">
+<div class="col-12 col-sm-6 col-md-4 col-lg-3">
 
-<div class="card p-2">
+<div class="card h-100 shadow-sm">
 
 <img src="${p.img}" class="card-img-top">
 
@@ -63,7 +63,7 @@ div.innerHTML+=`
 
 <div class="new">R$ ${p.new}</div>
 
-<a href="${p.link}" target="_blank" class="btn btn-success">
+<a href="${p.link}" target="_blank" class="btn btn-success mt-2">
 Ver Oferta
 </a>
 
