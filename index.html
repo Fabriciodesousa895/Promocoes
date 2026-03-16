@@ -8,26 +8,33 @@
 <style>
 /* ===== Título ===== */
 h1 {
-  font-size: 5.5rem;
+  font-size: 5rem; /* grande para desktop */
   font-weight: bold;
   text-align: center;
   margin-bottom: 2rem;
 }
 @media (max-width: 576px) {
   h1 {
-    font-size: 2.8rem;
+    font-size: 3rem; /* adaptável para celular */
   }
-  h6{ font-size: 2.0rem;
-    }
-  ;
 }
 
 /* ===== Cards ===== */
+.row#g-produtos {
+  gap: 1.5rem;
+}
+
 .card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+.card:hover {
+  transform: scale(1.03);
 }
 
 .card img {
@@ -42,6 +49,7 @@ h1 {
   justify-content: space-between;
   flex-grow: 1;
   text-align: center;
+  padding: 1rem;
 }
 
 /* Preço antigo */
@@ -54,7 +62,7 @@ h1 {
 
 /* Preço novo */
 .new {
-  font-size: 32px;
+  font-size: 28px;
   color: red;
   font-weight: bold;
   margin-bottom: 15px;
@@ -62,29 +70,25 @@ h1 {
 
 /* Botão */
 .btn {
-  font-size: 20px;
-  padding: 14px 25px;
+  font-size: 18px;
+  padding: 12px 20px;
 }
 
 /* ===== Ajustes para celular ===== */
 @media (max-width: 576px) {
-  .col-12 {
+  .col-card {
     flex: 0 0 100%;
     max-width: 100%;
   }
 
-  .card {
-    min-height: 550px;
-  }
-
   .card img {
-    max-height: 350px; /* imagem maior no celular */
+    max-height: 300px;
   }
 
   .card-body h6 {
-    font-size: 26px; /* nome maior */
+    font-size: 22px;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
   }
 
   .old {
@@ -92,16 +96,12 @@ h1 {
   }
 
   .new {
-    font-size: 36px;
+    font-size: 32px;
   }
 
   .btn {
-    font-size: 35px;
-    padding: 16px 30px;
-  }
-
-  .row#g-produtos {
-    gap: 2rem;
+    font-size: 20px;
+    padding: 14px 25px;
   }
 }
 </style>
@@ -111,16 +111,16 @@ h1 {
 
 <h1>🔥 Promoções do Dia</h1>
 
-<div class="row g-3" id="produtos"></div>
+<div class="row g-3" id="g-produtos"></div>
 
 <script>
 fetch("promos.json")
 .then(r => r.json())
 .then(lista => {
-  let div = document.getElementById("produtos");
+  let div = document.getElementById("g-produtos");
   lista.forEach(p => {
     div.innerHTML += `
-      <div >
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-card">
         <div class="card h-100 shadow-sm">
           <img src="${p.img}" class="card-img-top" alt="${p.nome}">
           <div class="card-body">
