@@ -58,7 +58,7 @@ promos.forEach((p,i)=>{
 
 div.innerHTML+=`
 
-<div class="border p-2 mb-2">
+<div class="border p-2 mb-2 d-flex justify-content-between">
 
 <b>${p.nome}</b>
 
@@ -69,6 +69,16 @@ div.innerHTML+=`
 `
 
 })
+
+}
+
+function limparCampos(){
+
+document.getElementById("nome").value=""
+document.getElementById("img").value=""
+document.getElementById("old").value=""
+document.getElementById("new").value=""
+document.getElementById("link").value=""
 
 }
 
@@ -87,6 +97,8 @@ link:document.getElementById("link").value
 promos.push(p)
 
 render()
+
+limparCampos()
 
 }
 
