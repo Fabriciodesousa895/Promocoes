@@ -12,7 +12,6 @@ body {
   background: #f8f9fa;
 }
 
-/* TOPO */
 .topo {
   background: #dc3545;
   color: white;
@@ -21,7 +20,6 @@ body {
   font-size: 20px;
 }
 
-/* FORM */
 .form-box {
   background: white;
   padding: 20px;
@@ -29,7 +27,6 @@ body {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-/* LISTA */
 .card-produto {
   border-radius: 10px;
   transition: 0.2s;
@@ -38,12 +35,6 @@ body {
 .card-produto:hover {
   transform: scale(1.02);
 }
-
-/* BOTÕES */
-.btn-danger {
-  background: #dc3545;
-}
-
 </style>
 
 </head>
@@ -54,11 +45,16 @@ body {
 
 <div class="container mt-4">
 
+<!-- IMPORTAR -->
+<div class="mb-3">
+  <label><b>Importar JSON</b></label>
+  <input type="file" class="form-control" onchange="importarJSON(event)">
+</div>
+
 <div class="row">
 
 <!-- FORM -->
 <div class="col-md-4">
-
 <div class="form-box">
 
 <h5>Cadastrar / Editar</h5>
@@ -87,16 +83,12 @@ body {
 <button class="btn btn-primary w-100" onclick="exportar()">Exportar JSON</button>
 
 </div>
-
 </div>
 
 <!-- LISTA -->
 <div class="col-md-8">
-
-<h5>Produtos cadastrados</h5>
-
+<h5>Produtos</h5>
 <div id="lista" class="row"></div>
-
 </div>
 
 </div>
@@ -107,17 +99,26 @@ body {
 let promos = []
 let editIndex = null
 
-// 🔥 CARREGAR JSON
-fetch('..\promos.json')
-  .then(res => res.json())
-  .then(data => {
-    promos = data
-    render()
-  })
-  .catch(() => {
-    console.warn("Rodando local sem JSON")
-  })
+// 🔥 IMPORTAR JSON
+function importarJSON(event){
+  const file = event.target.files[0]
+  if (!file) return
 
+  const reader = new FileReader()
+
+  reader.onload = function(e){
+    try{
+      promos = JSON.parse(e.target.result)
+      render()
+    }catch{
+      alert("Erro ao ler JSON")
+    }
+  }
+
+  reader.readAsText(file)
+}
+
+// 🔥 RENDER
 function render(){
 
 let div = document.getElementById("lista")
@@ -126,7 +127,6 @@ div.innerHTML = ""
 promos.forEach((p,i)=>{
 
 div.innerHTML += `
-
 <div class="col-md-6 mb-3">
   <div class="card card-produto shadow-sm h-100">
 
@@ -135,7 +135,6 @@ div.innerHTML += `
     <div class="card-body text-center">
 
       <h6>${p.nome}</h6>
-
       <small class="text-muted">${p.categoria}</small>
 
       <p><del>R$ ${p.old}</del></p>
@@ -150,13 +149,12 @@ div.innerHTML += `
 
   </div>
 </div>
-
 `
-
 })
 
 }
 
+// 🔥 LIMPAR
 function limpar(){
 nome.value=""
 img.value=""
@@ -168,6 +166,7 @@ editIndex=null
 btnUpdate.style.display="none"
 }
 
+// 🔥 ADD
 function add(){
 
 let p = {
@@ -185,6 +184,7 @@ limpar()
 
 }
 
+// 🔥 EDITAR
 function editar(i){
 
 let p = promos[i]
@@ -201,6 +201,7 @@ btnUpdate.style.display="block"
 
 }
 
+// 🔥 ATUALIZAR
 function atualizar(){
 
 promos[editIndex] = {
@@ -217,6 +218,7 @@ limpar()
 
 }
 
+// 🔥 REMOVER
 function remover(i){
 
 if(confirm("Excluir produto?")){
@@ -226,6 +228,7 @@ render()
 
 }
 
+// 🔥 EXPORTAR
 function exportar(){
 
 let blob = new Blob([JSON.stringify(promos,null,2)],{type:"application/json"})
