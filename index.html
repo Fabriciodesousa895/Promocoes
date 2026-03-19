@@ -1,53 +1,124 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PromoOfertas </title>
+  <title>PromoOfertas</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <style>
+    body {
+      background: #f8f9fa;
+    }
+
     .sidebar {
       height: 100vh;
-      background: #f1f1f1;
+      background: #eee;
       padding-top: 20px;
     }
+
     .sidebar a {
       display: block;
       padding: 10px 15px;
       text-decoration: none;
       color: #333;
-      cursor: pointer;
     }
+
     .sidebar a:hover {
       background: #ddd;
     }
+
+    .header-title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .header-title h1 {
+      font-weight: 600;
+    }
+
+    .card img {
+      height: 180px;
+      object-fit: contain;
+      padding: 10px;
+    }
+
+    .sobre {
+      margin-top: 40px;
+    }
   </style>
 </head>
+
 <body>
 
-<nav class="navbar navbar-dark bg-danger">
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger">
   <div class="container-fluid">
     <span class="navbar-brand">🔥 PromoOfertas</span>
+
+    <div class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="#">Início</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Ofertas</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Sobre</a></li>
+      </ul>
+    </div>
   </div>
 </nav>
 
 <div class="container-fluid">
   <div class="row">
 
-    <!-- Categorias -->
+    <!-- SIDEBAR -->
     <div class="col-md-3 sidebar">
       <h5 class="px-3">Categorias</h5>
+
       <a onclick="filtrar('todas')">Todas</a>
-      <a onclick="filtrar('Casa, Jardim e Limpeza')">Casa, Jardim e Limpeza</a>
+      <a onclick="filtrar('Beleza')">Beleza e Cuidados Pessoais</a>
+      <a onclick="filtrar('Bolsas')">Bolsas, Malas e Mochilas</a>
+      <a onclick="filtrar('Brinquedos')">Brinquedos e Jogos</a>
+      <a onclick="filtrar('Casa')">Casa, Jardim e Limpeza</a>
+      <a onclick="filtrar('Celulares')">Celulares e Comunicação</a>
+      <a onclick="filtrar('Informática')">Computadores e Informática</a>
       <a onclick="filtrar('Cozinha')">Cozinha</a>
+      <a onclick="filtrar('Eletrônicos')">Eletrônicos, TV e Áudio</a>
+      <a onclick="filtrar('Esportes')">Esportes, Aventura e Lazer</a>
+      <a onclick="filtrar('Ferramentas')">Ferramentas e Construção</a>
     </div>
 
-    <!-- Produtos -->
+    <!-- CONTEÚDO -->
     <div class="col-md-9 p-4">
-      <div class="row" id="produtos"></div>
-    </div>
 
+      <!-- TÍTULO -->
+      <div class="header-title">
+        <h1>Promoções Imperdíveis</h1>
+        <p class="text-muted">Ofertas atualizadas todos os dias</p>
+      </div>
+
+      <!-- PRODUTOS -->
+      <div class="row" id="produtos"></div>
+
+      <!-- SOBRE -->
+      <div class="sobre">
+        <h3>Sobre o Site</h3>
+        <p>
+          Este site reúne promoções reais e atualizadas diariamente. 
+          Todos os links apresentados redirecionam para a Amazon, uma das maiores e mais confiáveis plataformas de compras do mundo.
+        </p>
+
+        <ul>
+          <li>✔ Produtos originais e seguros</li>
+          <li>✔ Ofertas verificadas</li>
+          <li>✔ Promoções válidas por tempo limitado</li>
+        </ul>
+
+        <p>
+          Nosso objetivo é facilitar sua busca pelas melhores ofertas com total segurança e transparência.
+        </p>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -68,11 +139,11 @@ function mostrarProdutos(lista) {
   lista.forEach(p => {
     container.innerHTML += `
       <div class="col-md-4 mb-4">
-        <div class="card h-100">
+        <div class="card h-100 shadow-sm">
           <img src="${p.img}" class="card-img-top">
-          <div class="card-body">
+          <div class="card-body text-center">
             <h6>${p.nome}</h6>
-            <p><del>R$ ${p.old}</del></p>
+            <p class="text-muted"><del>R$ ${p.old}</del></p>
             <h5 class="text-danger">R$ ${p.new}</h5>
             <a href="${p.link}" target="_blank" class="btn btn-success w-100">
               Ver na Amazon
