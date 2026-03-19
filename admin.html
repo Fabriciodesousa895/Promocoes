@@ -17,23 +17,11 @@ body {
   color: white;
   padding: 15px;
   font-weight: bold;
-  font-size: 20px;
-}
-
-.form-box {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
-
-.card-produto {
-  border-radius: 10px;
-  transition: 0.2s;
 }
 
 .card-produto:hover {
   transform: scale(1.02);
+  transition: 0.2s;
 }
 </style>
 
@@ -48,22 +36,19 @@ body {
 <!-- IMPORTAR -->
 <div class="mb-3">
   <label><b>Importar JSON</b></label>
-  <input type="file" class="form-control" onchange="importarJSON(event)">
+  <input type="file" class="form-control" id="fileInput">
 </div>
 
 <div class="row">
 
 <!-- FORM -->
 <div class="col-md-4">
-<div class="form-box">
-
-<h5>Cadastrar / Editar</h5>
 
 <input id="nome" class="form-control mb-2" placeholder="Nome">
-<input id="img" class="form-control mb-2" placeholder="URL da imagem">
+<input id="img" class="form-control mb-2" placeholder="Imagem URL">
 <input id="old" class="form-control mb-2" placeholder="Preço original">
 <input id="new" class="form-control mb-2" placeholder="Preço promoção">
-<input id="link" class="form-control mb-2" placeholder="Link afiliado">
+<input id="link" class="form-control mb-2" placeholder="Link">
 
 <select id="categoria" class="form-control mb-2">
 <option>Beleza</option>
@@ -83,7 +68,6 @@ body {
 <button class="btn btn-primary w-100" onclick="exportar()">Exportar JSON</button>
 
 </div>
-</div>
 
 <!-- LISTA -->
 <div class="col-md-8">
@@ -99,46 +83,62 @@ body {
 let promos = []
 let editIndex = null
 
-// 🔥 IMPORTAR JSON
-function importarJSON(event){
+// 🔥 IMPORTAÇÃO CORRIGIDA
+document.getElementById("fileInput").addEventListener("change", function(event){
+
   const file = event.target.files[0]
   if (!file) return
 
   const reader = new FileReader()
 
   reader.onload = function(e){
-    try{
-      promos = JSON.parse(e.target.result)
+    try {
+      const data = JSON.parse(e.target.result)
+
+      if (!Array.isArray(data)) {
+        alert("JSON inválido (precisa ser lista)")
+        return
+      }
+
+      promos = data
       render()
-    }catch{
+
+    } catch (err) {
+      console.error(err)
       alert("Erro ao ler JSON")
     }
   }
 
   reader.readAsText(file)
-}
+
+})
 
 // 🔥 RENDER
 function render(){
 
-let div = document.getElementById("lista")
+const div = document.getElementById("lista")
 div.innerHTML = ""
+
+if (promos.length === 0){
+  div.innerHTML = "<p>Nenhum produto carregado</p>"
+  return
+}
 
 promos.forEach((p,i)=>{
 
 div.innerHTML += `
 <div class="col-md-6 mb-3">
-  <div class="card card-produto shadow-sm h-100">
+  <div class="card shadow-sm h-100 card-produto">
 
-    <img src="${p.img}" class="card-img-top" style="height:150px;object-fit:contain">
+    <img src="${p.img || ''}" class="card-img-top" style="height:150px;object-fit:contain">
 
     <div class="card-body text-center">
 
-      <h6>${p.nome}</h6>
-      <small class="text-muted">${p.categoria}</small>
+      <h6>${p.nome || ''}</h6>
+      <small>${p.categoria || ''}</small>
 
-      <p><del>R$ ${p.old}</del></p>
-      <h5 class="text-danger">R$ ${p.new}</h5>
+      <p><del>R$ ${p.old || ''}</del></p>
+      <h5 class="text-danger">R$ ${p.new || ''}</h5>
 
       <div class="d-flex gap-2">
         <button onclick="editar(${i})" class="btn btn-warning w-50">Editar</button>
@@ -154,31 +154,27 @@ div.innerHTML += `
 
 }
 
-// 🔥 LIMPAR
-function limpar(){
-nome.value=""
-img.value=""
-old.value=""
-new.value=""
-link.value=""
-categoria.value="Beleza"
-editIndex=null
-btnUpdate.style.display="none"
-}
-
 // 🔥 ADD
 function add(){
 
+const nome = document.getElementById("nome").value
+
+if (!nome){
+  alert("Preencha o nome")
+  return
+}
+
 let p = {
-nome:nome.value,
-img:img.value,
-old:old.value,
-new:new.value,
-link:link.value,
-categoria:categoria.value
+nome: nome,
+img: document.getElementById("img").value,
+old: document.getElementById("old").value,
+new: document.getElementById("new").value,
+link: document.getElementById("link").value,
+categoria: document.getElementById("categoria").value
 }
 
 promos.push(p)
+
 render()
 limpar()
 
@@ -189,28 +185,30 @@ function editar(i){
 
 let p = promos[i]
 
-nome.value=p.nome
-img.value=p.img
-old.value=p.old
-new.value=p.new
-link.value=p.link
-categoria.value=p.categoria
+document.getElementById("nome").value = p.nome
+document.getElementById("img").value = p.img
+document.getElementById("old").value = p.old
+document.getElementById("new").value = p.new
+document.getElementById("link").value = p.link
+document.getElementById("categoria").value = p.categoria
 
 editIndex = i
-btnUpdate.style.display="block"
+document.getElementById("btnUpdate").style.display = "block"
 
 }
 
 // 🔥 ATUALIZAR
 function atualizar(){
 
+if (editIndex === null) return
+
 promos[editIndex] = {
-nome:nome.value,
-img:img.value,
-old:old.value,
-new:new.value,
-link:link.value,
-categoria:categoria.value
+nome: document.getElementById("nome").value,
+img: document.getElementById("img").value,
+old: document.getElementById("old").value,
+new: document.getElementById("new").value,
+link: document.getElementById("link").value,
+categoria: document.getElementById("categoria").value
 }
 
 render()
@@ -228,15 +226,41 @@ render()
 
 }
 
-// 🔥 EXPORTAR
+// 🔥 LIMPAR
+function limpar(){
+
+document.getElementById("nome").value = ""
+document.getElementById("img").value = ""
+document.getElementById("old").value = ""
+document.getElementById("new").value = ""
+document.getElementById("link").value = ""
+document.getElementById("categoria").value = "Beleza"
+
+editIndex = null
+document.getElementById("btnUpdate").style.display = "none"
+
+}
+
+// 🔥 EXPORTAR (CORRIGIDO)
 function exportar(){
 
-let blob = new Blob([JSON.stringify(promos,null,2)],{type:"application/json"})
+if (promos.length === 0){
+  alert("Nada para exportar")
+  return
+}
 
-let a = document.createElement("a")
-a.href = URL.createObjectURL(blob)
+const json = JSON.stringify(promos, null, 2)
+
+const blob = new Blob([json], {type: "application/json"})
+
+const url = URL.createObjectURL(blob)
+
+const a = document.createElement("a")
+a.href = url
 a.download = "promos.json"
 a.click()
+
+URL.revokeObjectURL(url)
 
 }
 
