@@ -1,46 +1,75 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
 
 <meta charset="UTF-8">
-<title>Painel Promoções</title>
+<title>Painel PromoOfertas</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<style>
+body {
+  background: #f8f9fa;
+}
+
+/* TOPO */
+.topo {
+  background: #dc3545;
+  color: white;
+  padding: 15px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* FORM */
+.form-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* LISTA */
+.card-produto {
+  border-radius: 10px;
+  transition: 0.2s;
+}
+
+.card-produto:hover {
+  transform: scale(1.02);
+}
+
+/* BOTÕES */
+.btn-danger {
+  background: #dc3545;
+}
+
+</style>
+
 </head>
 
-<body class="container py-4">
+<body>
 
-<h2>Painel de Promoções</h2>
+<div class="topo">🔥 Painel PromoOfertas</div>
 
-<div class="mb-2">
-<label>Nome</label>
-<input id="nome" class="form-control">
-</div>
+<div class="container mt-4">
 
-<div class="mb-2">
-<label>Imagem URL</label>
-<input id="img" class="form-control">
-</div>
+<div class="row">
 
-<div class="mb-2">
-<label>Preço original</label>
-<input id="old" class="form-control">
-</div>
+<!-- FORM -->
+<div class="col-md-4">
 
-<div class="mb-2">
-<label>Preço promoção</label>
-<input id="new" class="form-control">
-</div>
+<div class="form-box">
 
-<div class="mb-2">
-<label>Link afiliado</label>
-<input id="link" class="form-control">
-</div>
+<h5>Cadastrar / Editar</h5>
 
-<div class="mb-2">
-<label>Categoria</label>
-<select id="categoria" class="form-control">
+<input id="nome" class="form-control mb-2" placeholder="Nome">
+<input id="img" class="form-control mb-2" placeholder="URL da imagem">
+<input id="old" class="form-control mb-2" placeholder="Preço original">
+<input id="new" class="form-control mb-2" placeholder="Preço promoção">
+<input id="link" class="form-control mb-2" placeholder="Link afiliado">
+
+<select id="categoria" class="form-control mb-2">
 <option>Beleza</option>
 <option>Bolsas</option>
 <option>Brinquedos</option>
@@ -52,22 +81,33 @@
 <option>Esportes</option>
 <option>Ferramentas</option>
 </select>
+
+<button class="btn btn-success w-100 mb-2" onclick="add()">Adicionar</button>
+<button class="btn btn-warning w-100 mb-2" onclick="atualizar()" id="btnUpdate" style="display:none">Atualizar</button>
+<button class="btn btn-primary w-100" onclick="exportar()">Exportar JSON</button>
+
 </div>
 
-<button class="btn btn-success" onclick="add()">Adicionar</button>
-<button class="btn btn-warning" onclick="atualizar()" id="btnUpdate" style="display:none">Atualizar</button>
-<button class="btn btn-primary" onclick="exportar()">Exportar JSON</button>
+</div>
 
-<hr>
+<!-- LISTA -->
+<div class="col-md-8">
 
-<div id="lista"></div>
+<h5>Produtos cadastrados</h5>
+
+<div id="lista" class="row"></div>
+
+</div>
+
+</div>
+</div>
 
 <script>
 
 let promos = []
 let editIndex = null
 
-// 🔥 CARREGAR JSON EXISTENTE
+// 🔥 CARREGAR JSON
 fetch('promos.json')
   .then(res => res.json())
   .then(data => {
@@ -75,28 +115,40 @@ fetch('promos.json')
     render()
   })
   .catch(() => {
-    console.warn("Nenhum JSON carregado (normal se estiver local)")
+    console.warn("Rodando local sem JSON")
   })
 
 function render(){
 
-let div=document.getElementById("lista")
-div.innerHTML=""
+let div = document.getElementById("lista")
+div.innerHTML = ""
 
 promos.forEach((p,i)=>{
 
-div.innerHTML+=`
+div.innerHTML += `
 
-<div class="border p-2 mb-2">
+<div class="col-md-6 mb-3">
+  <div class="card card-produto shadow-sm h-100">
 
-<b>${p.nome}</b> - ${p.categoria} <br>
-<small>R$ ${p.old} → <b>R$ ${p.new}</b></small>
+    <img src="${p.img}" class="card-img-top" style="height:150px;object-fit:contain">
 
-<div class="mt-2">
-<button onclick="editar(${i})" class="btn btn-warning btn-sm">Editar</button>
-<button onclick="remover(${i})" class="btn btn-danger btn-sm">Excluir</button>
-</div>
+    <div class="card-body text-center">
 
+      <h6>${p.nome}</h6>
+
+      <small class="text-muted">${p.categoria}</small>
+
+      <p><del>R$ ${p.old}</del></p>
+      <h5 class="text-danger">R$ ${p.new}</h5>
+
+      <div class="d-flex gap-2">
+        <button onclick="editar(${i})" class="btn btn-warning w-50">Editar</button>
+        <button onclick="remover(${i})" class="btn btn-danger w-50">Excluir</button>
+      </div>
+
+    </div>
+
+  </div>
 </div>
 
 `
@@ -105,37 +157,31 @@ div.innerHTML+=`
 
 }
 
-function limparCampos(){
-
+function limpar(){
 nome.value=""
 img.value=""
 old.value=""
 new.value=""
 link.value=""
 categoria.value="Beleza"
-
 editIndex=null
 btnUpdate.style.display="none"
-
 }
 
 function add(){
 
-let p={
-
+let p = {
 nome:nome.value,
 img:img.value,
 old:old.value,
 new:new.value,
 link:link.value,
 categoria:categoria.value
-
 }
 
 promos.push(p)
-
 render()
-limparCampos()
+limpar()
 
 }
 
@@ -151,50 +197,42 @@ link.value=p.link
 categoria.value=p.categoria
 
 editIndex = i
-
-btnUpdate.style.display="inline-block"
+btnUpdate.style.display="block"
 
 }
 
 function atualizar(){
 
 promos[editIndex] = {
-
 nome:nome.value,
 img:img.value,
 old:old.value,
 new:new.value,
 link:link.value,
 categoria:categoria.value
-
 }
 
 render()
-limparCampos()
+limpar()
 
 }
 
 function remover(i){
 
-if(confirm("Deseja excluir?")){
-
+if(confirm("Excluir produto?")){
 promos.splice(i,1)
 render()
-
 }
 
 }
 
 function exportar(){
 
-let blob=new Blob([JSON.stringify(promos,null,2)],{type:"application/json"})
+let blob = new Blob([JSON.stringify(promos,null,2)],{type:"application/json"})
 
-let a=document.createElement("a")
-
-a.href=URL.createObjectURL(blob)
-
-a.download="promos.json"
-
+let a = document.createElement("a")
+a.href = URL.createObjectURL(blob)
+a.download = "promos.json"
 a.click()
 
 }
