@@ -38,7 +38,24 @@
 <input id="link" class="form-control">
 </div>
 
+<div class="mb-2">
+<label>Categoria</label>
+<select id="categoria" class="form-control">
+<option>Beleza</option>
+<option>Bolsas</option>
+<option>Brinquedos</option>
+<option>Casa</option>
+<option>Celulares</option>
+<option>Informática</option>
+<option>Cozinha</option>
+<option>Eletrônicos</option>
+<option>Esportes</option>
+<option>Ferramentas</option>
+</select>
+</div>
+
 <button class="btn btn-success" onclick="add()">Adicionar</button>
+<button class="btn btn-warning" onclick="atualizar()" id="btnUpdate" style="display:none">Atualizar</button>
 <button class="btn btn-primary" onclick="exportar()">Exportar JSON</button>
 
 <hr>
@@ -47,7 +64,19 @@
 
 <script>
 
-let promos=[]
+let promos = []
+let editIndex = null
+
+// 🔥 CARREGAR JSON EXISTENTE
+fetch('promos.json')
+  .then(res => res.json())
+  .then(data => {
+    promos = data
+    render()
+  })
+  .catch(() => {
+    console.warn("Nenhum JSON carregado (normal se estiver local)")
+  })
 
 function render(){
 
@@ -58,11 +87,15 @@ promos.forEach((p,i)=>{
 
 div.innerHTML+=`
 
-<div class="border p-2 mb-2 d-flex justify-content-between">
+<div class="border p-2 mb-2">
 
-<b>${p.nome}</b>
+<b>${p.nome}</b> - ${p.categoria} <br>
+<small>R$ ${p.old} → <b>R$ ${p.new}</b></small>
 
+<div class="mt-2">
+<button onclick="editar(${i})" class="btn btn-warning btn-sm">Editar</button>
 <button onclick="remover(${i})" class="btn btn-danger btn-sm">Excluir</button>
+</div>
 
 </div>
 
@@ -74,11 +107,15 @@ div.innerHTML+=`
 
 function limparCampos(){
 
-document.getElementById("nome").value=""
-document.getElementById("img").value=""
-document.getElementById("old").value=""
-document.getElementById("new").value=""
-document.getElementById("link").value=""
+nome.value=""
+img.value=""
+old.value=""
+new.value=""
+link.value=""
+categoria.value="Beleza"
+
+editIndex=null
+btnUpdate.style.display="none"
 
 }
 
@@ -86,27 +123,65 @@ function add(){
 
 let p={
 
-nome:document.getElementById("nome").value,
-img:document.getElementById("img").value,
-old:document.getElementById("old").value,
-new:document.getElementById("new").value,
-link:document.getElementById("link").value
+nome:nome.value,
+img:img.value,
+old:old.value,
+new:new.value,
+link:link.value,
+categoria:categoria.value
 
 }
 
 promos.push(p)
 
 render()
+limparCampos()
 
+}
+
+function editar(i){
+
+let p = promos[i]
+
+nome.value=p.nome
+img.value=p.img
+old.value=p.old
+new.value=p.new
+link.value=p.link
+categoria.value=p.categoria
+
+editIndex = i
+
+btnUpdate.style.display="inline-block"
+
+}
+
+function atualizar(){
+
+promos[editIndex] = {
+
+nome:nome.value,
+img:img.value,
+old:old.value,
+new:new.value,
+link:link.value,
+categoria:categoria.value
+
+}
+
+render()
 limparCampos()
 
 }
 
 function remover(i){
 
-promos.splice(i,1)
+if(confirm("Deseja excluir?")){
 
+promos.splice(i,1)
 render()
+
+}
 
 }
 
