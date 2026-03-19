@@ -4,70 +4,79 @@
     "img": "https://m.media-amazon.com/images/I/71y1o6ee9IL._AC_SX569_.jpg",
     "old": "32,99",
     "new": "22,00",
-    "link": "https://amzn.to/3Nt2PeP"
+    "link": "https://amzn.to/3Nt2PeP",
+    "categoria": "Casa, Jardim e Limpeza"
   },
   {
     "nome": "Cif Cremoso Limpeza Milagrosa Remove 100% Da Sujeira 450 Ml",
     "img": "https://m.media-amazon.com/images/I/51y83251HNL._AC_SX425_.jpg",
     "old": "22,40",
     "new": "12,96",
-    "link": "https://amzn.to/4bfxGol"
+    "link": "https://amzn.to/4bfxGol",
+    "categoria": "Casa, Jardim e Limpeza"
   },
-  
   {
     "nome": "Comfort Amaciante Concentrado Brisa Elegante 1,5L",
     "img": "https://m.media-amazon.com/images/I/71CdAASlvCL._AC_SY300_SX300_QL70_ML2_.jpg",
     "old": "28,92",
     "new": "23,90",
-    "link": "https://amzn.to/417zhq6"
+    "link": "https://amzn.to/417zhq6",
+    "categoria": "Casa, Jardim e Limpeza"
   },
   {
-    "nome": "Brilhante Lava-Roupas Em Pó Roupas Brancas E Coloridas Limpeza Total Pacote Tamanho Família 4 Kg (Pacote De 1)",
+    "nome": "Brilhante Lava-Roupas Em Pó 4 Kg",
     "img": "https://m.media-amazon.com/images/I/717s6xdoosL._AC_SX425_.jpg",
     "old": "46,99",
     "new": "36,98",
-    "link": "https://amzn.to/4sPiCnk"
+    "link": "https://amzn.to/4sPiCnk",
+    "categoria": "Casa, Jardim e Limpeza"
   },
   {
-    "nome": "Scott Duramax Pano Reutilizável em Rolo, Branco, 174 Folhas (3 Unidades de 58 Folhas)",
+    "nome": "Scott Duramax Pano Reutilizável em Rolo",
     "img": "https://m.media-amazon.com/images/I/51nk9kkfYbL._AC_SX300_SY300_QL70_ML2_.jpg",
     "old": "45,99",
     "new": "21,90",
-    "link": "https://amzn.to/3Nlhnx4"
+    "link": "https://amzn.to/3Nlhnx4",
+    "categoria": "Casa, Jardim e Limpeza"
   },
   {
-    "nome": "Basike Fones de Ouvido Sem Fio, Headphone Bluetooth on-ear com Microfone, ANC Cancelamento do Ruído, Até 50 Horas de Música, HQ001B (Branco)",
+    "nome": "Basike Fones de Ouvido Bluetooth Headphone",
     "img": "https://m.media-amazon.com/images/I/514n0rnHIgL._AC_SY355_.jpg",
     "old": "153,00",
     "new": "135,09",
-    "link": "https://amzn.to/4bIZ8uJ"
+    "link": "https://amzn.to/4bIZ8uJ",
+    "categoria": "Eletrônicos, TV e Áudio"
   },
   {
-    "nome": "PHILIPS Fone de ouvido sem fio TWS bluetooth com microfone e energia para 18 horas totais na cor preto, padrão, TAT1235BK/97",
+    "nome": "PHILIPS Fone TWS Bluetooth TAT1235BK/97",
     "img": "https://m.media-amazon.com/images/I/61uMQCVH0CL._AC_SY355_.jpg",
     "old": "400",
     "new": "149,10",
-    "link": "https://amzn.to/3Pnhg4A"
+    "link": "https://amzn.to/3Pnhg4A",
+    "categoria": "Eletrônicos, TV e Áudio"
   },
   {
-    "nome": "Creatina Pura Dark Lab 300g, Monohidratada 100% de Pureza, Sem Glúten, Sem Sabor",
+    "nome": "Creatina Pura Dark Lab 300g",
     "img": "https://m.media-amazon.com/images/I/51dhBE31nXL._AC_SX425_.jpg",
     "old": "64,90",
     "new": "33,15",
-    "link": "https://amzn.to/4rB0GM6"
-  },  {
-    "nome": "Scala Plus Papel Toalha Mega, 360 Toalhas (3 Rolos de 120 Toalhas Cada)",
+    "link": "https://amzn.to/4rB0GM6",
+    "categoria": "Esportes, Aventura e Lazer"
+  },
+  {
+    "nome": "Scala Plus Papel Toalha Mega 360 Toalhas",
     "img": "https://m.media-amazon.com/images/I/7185guoiV8L._AC_SX569_.jpg",
     "old": "17,99",
     "new": "13,01",
-    "link": "https://amzn.to/3NkVVs3"
+    "link": "https://amzn.to/3NkVVs3",
+    "categoria": "Casa, Jardim e Limpeza"
   },
   {
-    "nome": "WOLFF - Prato Raso de Porcelana Dubai Branco e Dourado 25cm x 2cm",
+    "nome": "WOLFF Prato Raso Porcelana Dubai 25cm",
     "img": "https://m.media-amazon.com/images/I/51IuI6G6x-L._AC_SY300_SX300_QL70_ML2_.jpg",
     "old": "131,10",
     "new": "95,88",
-    "link": "https://amzn.to/4rBCeu8"
+    "link": "https://amzn.to/4rBCeu8",
+    "categoria": "Cozinha"
   }
-
 ]
